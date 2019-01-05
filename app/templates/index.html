@@ -5,61 +5,32 @@
 	<form action="" method="post">
 		{{ form.hidden_tag() }}
 		<p>
-			{{ form.title.label }}<br>
-			{{ form.title(size=32) }}<br>
-			{% for error in form.title.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.attribution.label }}<br>
-			{{ form.attribution(size=32) }}<br>
-			{% for error in form.attribution.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.videourl.label }}<br>
-			{{ form.videourl(size=32) }}<br>
-			{% for error in form.videourl.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.thumbimg.label }}<br>
-			{{ form.thumbimg(size=32) }}<br>
-			{% for error in form.thumbimg.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.thumbatt.label }}<br>
-			{{ form.thumbatt(size=32) }}<br>
-			{% for error in form.thumbatt.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.vidlength.label }}<br>
-			{{ form.vidlength(size=32) }}<br>
-			{% for error in form.vidlength.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.vidcap.label }}<br>
-			{{ form.vidcap(size=64) }}<br>
-			{% for error in form.vidcap.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.pubdate.label }}<br>
-			{{ form.pubdate(size=32) }}<br>
-			{% for error in form.pubdate.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.update.label }}<br>
-			{{ form.update(size=32) }}<br>
-			{% for error in form.update.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
 			{{ form.uniqueid.label }}<br>
 			{{ form.uniqueid(size=32) }}<br>
 			{% for error in form.uniqueid.errors %}
 			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
-			{{ form.weburl.label }}<br>
-			{{ form.weburl(size=32) }}<br>
-			{% for error in form.weburl.errors %}
+			{{ form.title.label }}<br>
+			{{ form.title(size=32) }}<br>
+			{% for error in form.title.errors %}
 			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
+			{{ form.pubdate.label }}<br>
+			{{ form.pubdate(size=10) }}<br>
+			{% for error in form.pubdate.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			{{ form.videourl.label }}<br>
+			{{ form.videourl(size=64) }}<br>
+			{% for error in form.videourl.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+			{{ form.description.label }}<br>
+			{{ form.description(size=64) }}<br>
+			{% for error in form.description.errors %}
+			<span style="color: red;">[{{ error }}]</span>
+			{% endfor %}
+
 		</p>
 		<p>{{ form.submit() }}</p>
 	</form>

@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField, DateTimeField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, IntegerField
+from wtforms.fields.html5 import DateField, DateTimeField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
 
@@ -27,17 +28,18 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please user a different email address.')
 
 class PostForm(FlaskForm):
-    title = StringField('Video Title', validators=[DataRequired()])
-    attribution = StringField('Copyright Information', validators=[DataRequired()])
+    uniqueid = StringField('Unique ID', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
+    pubdate = DateField('Published Date', format='%Y-%m-%d', validators=[DataRequired()])
     videourl = StringField('Video URL', validators=[DataRequired()])
-    thumbimg = StringField('Thumbnail Image', validators=[DataRequired()])
-    thumbatt = StringField('Thumbnail Copyright', validators=[DataRequired()])
-    vidlength = StringField('Video Length', validators=[DataRequired()])
-    vidcap = StringField('Video Caption', validators=[DataRequired()])
-    pubdate = StringField('Published Date', validators=[DataRequired()])
-    update = StringField('Updated Date', validators=[DataRequired()])
-    uniqueid = StringField('UniqueID', validators=[DataRequired()])
-    weburl = StringField('Web URL', validators=[DataRequired()])
-    #post = TextAreaField('Tags and Keywords', validators=[DataRequired(), Length(min=1, max=140)])
+    description = StringField('Description', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+    #attribution = StringField('Copyright Information', validators=[DataRequired()])
+    #thumbimg = StringField('Thumbnail Image', validators=[DataRequired()])
+    #thumbatt = StringField('Thumbnail Copyright', validators=[DataRequired()])
+    #vidlength = StringField('Video Length', validators=[DataRequired()])
+    #update = StringField('Updated Date', validators=[DataRequired()])
+    #weburl = StringField('Web URL', validators=[DataRequired()])
+    #post = TextAreaField('Tags and Keywords', validators=[DataRequired(), Length(min=1, max=140)])
 
