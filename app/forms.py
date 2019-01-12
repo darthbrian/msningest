@@ -3,6 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextA
 from wtforms.fields.html5 import DateField, DateTimeField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
 from app.models import User
+import uuid
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -28,7 +29,8 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please user a different email address.')
 
 class PostForm(FlaskForm):
-    uniqueid = StringField('Unique ID', validators=[DataRequired()])
+    #uniqueid = StringField('Unique ID', validators=[DataRequired()])
+    uniqueid = StringField('Unique ID', default = str(uuid.uuid4())[0:8], validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     pubdate = DateField('Published Date', format='%Y-%m-%d', validators=[DataRequired()])
     videourl = StringField('Video URL', validators=[DataRequired()])

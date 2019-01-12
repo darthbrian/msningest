@@ -4,6 +4,7 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, PostForm
 from app.models import User, Post
+import uuid
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -16,6 +17,13 @@ def index():
         #db.session.commit()
         flash('Your post is now live!')
         flash('Or so I would like to say except that functionality doesn''t exist yet!')
+        # load a new unique id for next form
+        #form.uniqueid.raw_data = None
+        #form.uniqueid.data = None
+        form = PostForm()
+        newuid = str(uuid.uuid4())[0:8]
+        flash('The uid I just generated is : ' + newuid)
+        form.uniqueid.default = newuid
         return redirect(url_for('index'))
     #posts = current_user.followed_posts().all()
     #return render_template('index.html', title='Home Page', form=form, posts=posts)
