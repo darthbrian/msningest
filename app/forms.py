@@ -30,7 +30,7 @@ class RegistrationForm(FlaskForm):
 
 class PostForm(FlaskForm):
     #uniqueid = StringField('Unique ID', validators=[DataRequired()])
-    uniqueid = StringField('Unique ID', default = str(uuid.uuid4())[0:8], validators=[DataRequired()])
+    uniqueid = StringField('Unique ID', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     pubdate = DateField('Published Date', format='%Y-%m-%d', validators=[DataRequired()])
     videourl = StringField('Video URL', validators=[DataRequired()])
