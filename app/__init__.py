@@ -11,7 +11,5 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
-with open('MSNIngest.json', mode='w', encoding='utf-8') as f:
-    json.dump([], f)
 
 from app import routes, models

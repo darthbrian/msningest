@@ -4,6 +4,7 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, PostForm
 from app.models import User, Post
+import os
 import uuid
 import json
 
@@ -14,26 +15,30 @@ def index():
     form = PostForm()
     if form.validate_on_submit():
         #*** get form data and write it out to a file ***
-        #post = Post(body=form.post.data, author=current_user)
         postdict = {'uniqueid': form.uniqueid.data, \
                 'title': form.title.data, \
                 'pubdate': str(form.pubdate.data), \
                 'videourl': form.videourl.data, \
                 'description': form.description.data }
-        postfile = postdict['uniqueid'] + '.json'
-        # write to new file
-        with open(postfile, 'w') as outfile:
-            json.dump(postdict, outfile)
-        #do append
-        with open('MSNIngest.json', mode='a+', encoding='utf-8') as feedsjson:
-            feeds = json.load(feedsjson)
+
+        #*** If output file doesn't exist, create it and write to new file ***
+        feeds = []
+        if not os.path.isfile('MSNIngest.json'):
             feeds.append(postdict)
-            json.dump(feeds,feedsjson)
+            with open('MSNIngest.json', mode='w', encoding='utf-8') as f:
+                f.write(json.dumps(feeds, indent=2))
+        else:
+            #*** otherwise, open the file, read in the contents and append new data ***
+            with open('MSNIngest.json', mode='r', encoding='utf-8') as feedsjson:
+                feeds = json.load(feedsjson)
+
+            feeds.append(postdict)
+            with open('MSNIngest.json', mode='w', encoding='utf-8') as f:
+                f.write(json.dumps(feeds, indent=2))
 
         flash('Your post has been saved to an output file!')
         return redirect(url_for('index'))
-    #posts = current_user.followed_posts().all()
-    #return render_template('index.html', title='Home Page', form=form, posts=posts)
+
     return render_template('index.html', title='Home Page', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
