@@ -45,3 +45,6 @@ class PostForm(FlaskForm):
     #weburl = StringField('Web URL', validators=[DataRequired()])
     #post = TextAreaField('Tags and Keywords', validators=[DataRequired(), Length(min=1, max=140)])
 
+class BlankForm(FlaskForm):
+    filedata = StringField('')
+    

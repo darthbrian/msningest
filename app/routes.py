@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, PostForm
+from app.forms import LoginForm, RegistrationForm, PostForm, BlankForm
 from app.models import User, Post
 import os
 import uuid
@@ -40,6 +40,18 @@ def index():
         return redirect(url_for('index'))
 
     return render_template('index.html', title='Home Page', form=form)
+
+@app.route('/posts', methods=['GET', 'POST'])
+@login_required
+def posts():
+    form = BlankForm()
+    if not os.path.isfile('MSNIngest.json'):
+        posts = []
+    else:
+        with open('MSNIngest.json', mode='r', encoding='utf-8') as postsjson:
+            posts = json.load(postsjson)
+    
+    return render_template('posts.html', title='Home Page', form=form, posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

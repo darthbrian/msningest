@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h1>Hello, {{ current_user.username }}!</h1>
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
+	</form>
+	{% for post in posts %}
+	<p>
+	<b>UniqueID</b>: {{ post.uniqueid }}</b></br>
+	<b>Title</b>: {{ post.title }}</b></br>
+	<b>Date</b>: {{ post.pubdate }}</b></br>
+	<b>Link</b>: {{ post.videourl }}</b></br>
+	<b>Description</b>: {{ post.description }}</b></br>
+	</br>
+	</p>
+	{% endfor %}
+{% endblock %}
