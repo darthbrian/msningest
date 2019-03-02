@@ -4,9 +4,9 @@ from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, PostForm, BlankForm
 from app.models import User, Post
-import os
-import uuid
-import json
+from datetime import datetime, timezone
+import os, uuid, json
+
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -17,7 +17,7 @@ def index():
         #*** get form data and write it out to a file ***
         postdict = {'uniqueid': form.uniqueid.data, \
                 'title': form.title.data, \
-                'pubdate': str(form.pubdate.data), \
+                'pubdate': datetime.strptime(str(form.pubdate.data), '%Y-%m-%d').isoformat(), \
                 'videourl': form.videourl.data, \
                 'description': form.description.data }
 
