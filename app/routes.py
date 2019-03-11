@@ -14,13 +14,21 @@ import os, uuid, json
 def index():
     form = PostForm()
     if form.validate_on_submit():
+        # datetime.strptime(str(datetime.now(timezone.utc)), '%Y-%m-%d %H:%M:%S.ffffff%Z').replace(microsecond=0).isoformat(), \
+        #curdt = datetime.utcnow().isoformat
+        curdt = datetime.utcnow().isoformat()
         #*** get form data and write it out to a file ***
-        postdict = {'uniqueid': form.uniqueid.data, \
-                'title': form.title.data, \
-                'pubdate': datetime.strptime(str(form.pubdate.data), '%Y-%m-%d').isoformat(), \
+        postdict = {
                 'videourl': form.videourl.data, \
-                'description': form.description.data }
+                'uniqueid': form.videourl.data, \
+                'title': form.title.data, \
+                'description': form.description.data, \
+                'pubdate': curdt } 
+                #'uniqueid': form.uniqueid.data, \
+                #'pubdate': datetime.strptime(str(form.pubdate.data), '%Y-%m-%d').isoformat(), \
+                #}
 
+        #flash(postdict)
         #*** If output file doesn't exist, create it and write to new file ***
         feeds = []
         if not os.path.isfile('MSNIngest.json'):

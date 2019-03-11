@@ -7,11 +7,11 @@
 	</form>
 	{% for post in posts %}
 	<p>
-	<b>UniqueID</b>: {{ post.uniqueid }}</b></br>
-	<b>Title</b>: {{ post.title }}</b></br>
-	<b>Date</b>: {{ post.pubdate }}</b></br>
 	<b>Link</b>: {{ post.videourl }}</b></br>
+	<b>Title</b>: {{ post.title }}</b></br>
 	<b>Description</b>: {{ post.description }}</b></br>
+	<b>UniqueID</b>: {{ post.uniqueid }}</b></br>
+	<b>Date</b>: {{ post.pubdate }}</b></br>
 	</br>
 	</p>
 	{% endfor %}

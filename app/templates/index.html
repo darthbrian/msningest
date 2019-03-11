@@ -5,9 +5,9 @@
 	<form action="" method="post">
 		{{ form.hidden_tag() }}
 		<p>
-			{{ form.uniqueid.label }}<br>
-			{{ form.uniqueid(size=32) }}<br>
-			{% for error in form.uniqueid.errors %}
+			{{ form.videourl.label }}<br>
+			{{ form.videourl(size=64) }}<br>
+			{% for error in form.videourl.errors %}
 			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
 			{{ form.title.label }}<br>
@@ -15,22 +15,11 @@
 			{% for error in form.title.errors %}
 			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
-			{{ form.pubdate.label }}<br>
-			{{ form.pubdate(size=20) }}<br>
-			{% for error in form.pubdate.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
-			{{ form.videourl.label }}<br>
-			{{ form.videourl(size=64) }}<br>
-			{% for error in form.videourl.errors %}
-			<span style="color: red;">[{{ error }}]</span>
-			{% endfor %}
 			{{ form.description.label }}<br>
 			{{ form.description(size=64) }}<br>
 			{% for error in form.description.errors %}
 			<span style="color: red;">[{{ error }}]</span>
 			{% endfor %}
-
 		</p>
 		<p>{{ form.submit() }}</p>
 	</form>

@@ -30,12 +30,11 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please user a different email address.')
 
 class PostForm(FlaskForm):
-    #uniqueid = StringField('Unique ID', validators=[DataRequired()])
-    uniqueid = StringField('Unique ID', validators=[DataRequired()])
-    title = StringField('Title', validators=[DataRequired()])
-    pubdate = DateField('Published Date', format='%Y-%m-%d', validators=[DataRequired()])
     videourl = StringField('Video URL', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
+    #uniqueid = StringField('Unique ID', validators=[DataRequired()])
+    #pubdate = DateField('Published Date', format='%Y-%m-%d', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     #attribution = StringField('Copyright Information', validators=[DataRequired()])
