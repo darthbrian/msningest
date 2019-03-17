@@ -5,6 +5,7 @@
 	<form action="" method="post">
 		{{ form.hidden_tag() }}
 	</form>
+	{{ publish_message }}
 	{% for post in posts %}
 	<p>
 	<b>Link</b>: {{ post.videourl }}</b></br>
@@ -15,4 +16,7 @@
 	</br>
 	</p>
 	{% endfor %}
+	<form action="/publish/" method="post">
+		<button name="publishBtn" type="submit">Publish</button>
+	</form>
 {% endblock %}

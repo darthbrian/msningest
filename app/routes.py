@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import Flask, render_template, Response, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
@@ -53,6 +53,7 @@ def index():
 @login_required
 def posts():
     form = BlankForm()
+
     if not os.path.isfile('MSNIngest.json'):
         posts = []
     else:
@@ -60,6 +61,18 @@ def posts():
             posts = json.load(postsjson)
     
     return render_template('posts.html', title='Home Page', form=form, posts=posts)
+
+@app.route('/publish/', methods=['POST'])
+def publish():
+    from .mrsstest import convert
+
+    convert()
+
+    form = BlankForm()
+    posts = []
+
+    publish_message = "You Pushed the Publish Button."
+    return render_template('posts.html', title='Home Page', form=form, posts=posts, message=publish_message);
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
