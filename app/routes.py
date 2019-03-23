@@ -65,8 +65,15 @@ def posts():
 @app.route('/publish/', methods=['POST'])
 def publish():
     from .mrsstest import convert
+    import boto3
 
     convert()
+
+    '''upload to S3'''
+    s3 = boto3.client('s3')
+    filename = 'rss2.xml'
+    bucket_name = 'mrsstest-022319'
+    s3.upload_file(filename, bucket_name, filename)
 
     form = BlankForm()
     posts = []
