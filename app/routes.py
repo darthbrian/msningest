@@ -60,7 +60,7 @@ def posts():
         with open('MSNIngest.json', mode='r', encoding='utf-8') as postsjson:
             posts = json.load(postsjson)
     
-    return render_template('posts.html', title='Home Page', form=form, posts=posts)
+    return render_template('posts.html', title='Home Page', form=form, posts=posts, publish_message='')
 
 @app.route('/publish/', methods=['POST'])
 def publish():
@@ -70,16 +70,20 @@ def publish():
     convert()
 
     '''upload to S3'''
-    s3 = boto3.client('s3')
-    filename = 'rss2.xml'
     bucket_name = 'mrsstest-022319'
-    s3.upload_file(filename, bucket_name, filename)
+    filename = 'rss2.xml'
+
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket(bucket_name)
+    bucket.upload_file(filename, filename, ExtraArgs={'ACL':'public-read'})
+    location = boto3.client('s3').get_bucket_location(Bucket=bucket_name)['LocationConstraint']
+    url = "https://s3-%s.amazonaws.com/%s/%s" % (location, bucket_name, filename)
 
     form = BlankForm()
     posts = []
 
-    publish_message = "You Pushed the Publish Button."
-    return render_template('posts.html', title='Home Page', form=form, posts=posts, message=publish_message);
+    publish_message = url
+    return render_template('posts.html', title='Home Page', form=form, posts=posts, publish_message=publish_message);
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

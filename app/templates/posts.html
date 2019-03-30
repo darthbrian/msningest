@@ -5,7 +5,7 @@
 	<form action="" method="post">
 		{{ form.hidden_tag() }}
 	</form>
-	{{ publish_message }}
+	<a href="{{publish_message}}">{{publish_message}}</a>
 	{% for post in posts %}
 	<p>
 	<b>Link</b>: {{ post.videourl }}</b></br>
