@@ -1,0 +1,8 @@
+venv
+logs
+Dockerfile
+boot.sh
+rss2.xml
+MSNIngest.json
+MSNIngest.tmp
+msningest.py.tmp
