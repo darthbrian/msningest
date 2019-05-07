@@ -1,15 +1,15 @@
 from flask import Flask, render_template, Response, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
-from app import app, db
+from app import application, db
 from app.forms import LoginForm, RegistrationForm, PostForm, BlankForm
 from app.models import User, Post
 from datetime import datetime, timezone
 import os, uuid, json
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+@application.route('/', methods=['GET', 'POST'])
+@application.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
     form = PostForm()
@@ -49,7 +49,7 @@ def index():
 
     return render_template('index.html', title='Home Page', form=form)
 
-@app.route('/posts', methods=['GET', 'POST'])
+@application.route('/posts', methods=['GET', 'POST'])
 @login_required
 def posts():
     form = BlankForm()
@@ -62,16 +62,39 @@ def posts():
     
     return render_template('posts.html', title='Home Page', form=form, posts=posts, publish_message='')
 
-@app.route('/publish/', methods=['POST'])
+@application.route('/publish/', methods=['POST'])
 def publish():
     from .mrsstest import convert
+    import json
+    import logging
     import boto3
+    from botocore.exceptions import ClientError
 
     convert()
 
-    '''upload to S3'''
+    """upload to S3"""
     bucket_name = 'mrsstest-022319'
     filename = 'rss2.xml'
+ 
+    # Create the bucket policy
+    #bucket_policy = {
+    #    'Version': '2012-10-17',
+    #    'Statement': [{
+    #        'Sid': 'AddPerm',
+    #        'Effect': 'Allow',
+    #        'Principal': '*',
+    #        'Action': ['s3:GetObject'],
+    #        'Resource': "arn:aws:s3:::%s/*" % bucket_name
+    #    }]
+    #}
+
+    # Convert the policy to a JSON string
+    #bucket_policy = json.dumps(bucket_policy)
+
+    # Set the new policy on the given bucket
+    #s3bucket = boto3.client('s3')
+    #s3bucket.put_bucket_policy(Bucket=bucket_name, Policy=bucket_policy)
+    #s3bucket.put_bucket_policy(Bucket=bucket_name, Policy=bucket_policy)
 
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(bucket_name)
@@ -85,7 +108,7 @@ def publish():
     publish_message = url
     return render_template('posts.html', title='Home Page', form=form, posts=posts, publish_message=publish_message);
 
-@app.route('/login', methods=['GET', 'POST'])
+@application.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -102,12 +125,12 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
-@app.route('/logout')
+@application.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/register', methods=['GET', 'POST'])
+@application.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('index'))

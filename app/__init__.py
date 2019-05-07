@@ -5,11 +5,11 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 import json
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-login = LoginManager(app)
+application = Flask(__name__)
+application.config.from_object(Config)
+db = SQLAlchemy(application)
+migrate = Migrate(application, db)
+login = LoginManager(application)
 login.login_view = 'login'
 
 from app import routes, models
