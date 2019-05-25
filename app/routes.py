@@ -65,6 +65,7 @@ def posts():
 @application.route('/publish/', methods=['POST'])
 def publish():
     from .mrsstest import convert
+    import os
     import json
     import logging
     import boto3
@@ -75,27 +76,9 @@ def publish():
     """upload to S3"""
     bucket_name = 'mrsstest-022319'
     filename = 'rss2.xml'
+    AWS_ACCESS_KEY_ID = os.environ.get('ACCESS_KEY')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('SECRET_KEY')
  
-    # Create the bucket policy
-    #bucket_policy = {
-    #    'Version': '2012-10-17',
-    #    'Statement': [{
-    #        'Sid': 'AddPerm',
-    #        'Effect': 'Allow',
-    #        'Principal': '*',
-    #        'Action': ['s3:GetObject'],
-    #        'Resource': "arn:aws:s3:::%s/*" % bucket_name
-    #    }]
-    #}
-
-    # Convert the policy to a JSON string
-    #bucket_policy = json.dumps(bucket_policy)
-
-    # Set the new policy on the given bucket
-    #s3bucket = boto3.client('s3')
-    #s3bucket.put_bucket_policy(Bucket=bucket_name, Policy=bucket_policy)
-    #s3bucket.put_bucket_policy(Bucket=bucket_name, Policy=bucket_policy)
-
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(bucket_name)
     bucket.upload_file(filename, filename, ExtraArgs={'ACL':'public-read'})
