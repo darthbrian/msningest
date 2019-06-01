@@ -12,11 +12,11 @@ RUN venv/bin/pip3 install gunicorn
 
 COPY app app
 COPY migrations migrations
-COPY msningest.py config.py boot.sh ./
+COPY application.py config.py boot.sh ./
 COPY .aws .aws
 RUN chmod +x boot.sh
 
-ENV FLASK_APP msningest.py
+ENV FLASK_APP application.py
 
 RUN chown -R msningest:msningest ./
 USER msningest

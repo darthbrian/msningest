@@ -70,7 +70,6 @@ def publish():
     import logging
     import boto3
     from botocore.exceptions import ClientError
-
     convert()
 
     """upload to S3"""
@@ -78,7 +77,7 @@ def publish():
     filename = 'rss2.xml'
     AWS_ACCESS_KEY_ID = os.environ.get('ACCESS_KEY')
     AWS_SECRET_ACCESS_KEY = os.environ.get('SECRET_KEY')
- 
+
     s3 = boto3.resource('s3')
     bucket = s3.Bucket(bucket_name)
     bucket.upload_file(filename, filename, ExtraArgs={'ACL':'public-read'})
@@ -126,6 +125,4 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
-
-
 
