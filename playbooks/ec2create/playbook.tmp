@@ -1,0 +1,11 @@
+- name: test my new module
+#  connection: local
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Apache2 on targets
+      ap2-install: 
+      register: result
+
+    - name: Display debug info
+      debug: var=result    

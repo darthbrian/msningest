@@ -7,7 +7,7 @@ short_description: Configure and run msningest Docker container on AWS
 '''
 
 EXAMPLES = '''
-- name: Configure and rock msningest Docker container on AWS
+- name: Configure and run msningest Docker container on AWS
   ap2-install:
     register: result
 
