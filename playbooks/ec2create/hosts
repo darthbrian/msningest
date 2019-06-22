@@ -1,5 +1,5 @@
 
 [local]
-localhost
+localhost ansible_python_interpreter="/home/thor/pythonwork/git/msningest/venv/bin/python3" 
 
 [webserver]
