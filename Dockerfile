@@ -14,6 +14,8 @@ COPY app app
 COPY migrations migrations
 COPY application.py config.py boot.sh ./
 COPY .aws .aws
+COPY key.pem key.pem
+COPY cert.pem cert.pem
 RUN chmod +x boot.sh
 
 ENV FLASK_APP application.py

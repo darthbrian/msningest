@@ -3,9 +3,11 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_talisman import Talisman
 import json
 
 application = Flask(__name__)
+Talisman(application)
 application.config.from_object(Config)
 db = SQLAlchemy(application)
 migrate = Migrate(application, db)

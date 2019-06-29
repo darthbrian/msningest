@@ -9,6 +9,7 @@
       instance_type: t2.micro
       security_group: msn-secgroup
       image: ami-0cb72367e98845d43
+      #user_data: "{{ lookup('file', '/home/thor/pythonwork/git/msningest/dockinst.txt') }}"
       keypair: aws-eb # This is one of my keys that I already have in AWS
       region: us-west-2 # Change the Region
       count: 1
@@ -17,8 +18,7 @@
     tasks:
 
       - name: Create a security group
-        local_action:
-          module: ec2_group
+        ec2_group:
           name: "{{ security_group }}"
           description: Security Group for msningest EC2 instances 
           region: "{{ region }}"
@@ -41,34 +41,39 @@
         register: msn-secgroup
 
       - name: Launch the new EC2 Instance
-        local_action: ec2
-                      group={{ security_group }}
-                      instance_type={{ instance_type}}
-                      image={{ image }}
-                      wait=true
-                      region={{ region }}
-                      keypair={{ keypair }}
-                      count={{count}}
+        ec2:
+                group : "{{ security_group }}"
+                instance_type: "{{ instance_type }}"
+                image: "{{ image }}"
+                wait: true
+                region: "{{ region }}"
+                keypair: "{{ keypair }}"
+                count: "{{count}}"
+                user_data: "{{ lookup('file', '/home/thor/pythonwork/git/msningest/dockinst.txt') }}"
         register: ec2
 
         #- name: Add the newly created EC2 instance(s) to the local host group (located inside the directory)
       - name: Add EC2 IPs to inventory file
-        local_action: lineinfile
-                      dest="./hosts"
-                      regexp={{ item.public_ip }}
-                      insertafter="[webserver]" line={{ item.public_ip }}
+        lineinfile:
+                path: "./hosts"
+                regexp: "{{ item.public_ip }}"
+                insertafter: "[webserver]"
+                line: "{{ item.public_ip }}"
         with_items: "{{ ec2.instances }}"
 
 
       - name: Wait for SSH to come up
-        local_action: wait_for
-                      host={{ item.public_ip }}
-                      port=22
-                      state=started
+        wait_for:
+                host: "{{ item.public_ip }}"
+                port: 22
+                state: started
         with_items: "{{ ec2.instances }}"
 
       - name: Add tag to Instance(s)
-        local_action: ec2_tag resource={{ item.id }} region={{ region }} state=present
+        ec2_tag:
+                resource: "{{ item.id }}"
+                region: "{{ region }}"
+                state: present
         with_items: "{{ ec2.instances }}"
         args:
           tags:
