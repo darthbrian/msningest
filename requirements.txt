@@ -42,7 +42,7 @@ PyRSS2Gen==1.1
 python-dateutil==2.7.5
 python-dotenv==0.10.1
 python-editor==1.0.3
-PyYAML==3.13
+PyYAML==5.4
 requests==2.20.1
 s3transfer==0.2.0
 semantic-version==2.5.0
