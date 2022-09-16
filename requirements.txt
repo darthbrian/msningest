@@ -34,7 +34,7 @@ Jinja2==2.10.1
 jmespath==0.9.4
 jsonschema==2.6.0
 lxml==4.3.2
-Mako==1.0.7
+Mako==1.2.2
 MarkupSafe==1.1.0
 pathspec==0.5.9
 PyMediaRSS2Gen==0.1.1
